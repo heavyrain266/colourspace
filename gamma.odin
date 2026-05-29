@@ -4,11 +4,11 @@ import "core:math"
 
 
 @(require_results)
-srgb_encode :: #force_inline proc "contextless" (linear: Linear_sRGB) -> sRGB {
+srgb_encode :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> sRGB {
 	return sRGB{
-		_transfer_encode(linear.r),
-		_transfer_encode(linear.g),
-		_transfer_encode(linear.b),
+		_transfer_encode(srgb.r),
+		_transfer_encode(srgb.g),
+		_transfer_encode(srgb.b),
 	}
 }
 
@@ -23,11 +23,11 @@ srgb_decode :: #force_inline proc "contextless" (srgb: sRGB) -> Linear_sRGB {
 
 
 @(require_results)
-p3_encode :: #force_inline proc "contextless" (linear: Linear_P3) -> Display_P3 {
+p3_encode :: #force_inline proc "contextless" (p3: Linear_P3) -> Display_P3 {
 	return Display_P3{
-		_transfer_encode(linear.r),
-		_transfer_encode(linear.g),
-		_transfer_encode(linear.b),
+		_transfer_encode(p3.r),
+		_transfer_encode(p3.g),
+		_transfer_encode(p3.b),
 	}
 }
 
@@ -42,20 +42,20 @@ p3_decode :: #force_inline proc "contextless" (p3: Display_P3) -> Linear_P3 {
 
 
 @(require_results)
-rec2020_encode :: #force_inline proc "contextless" (linear: Linear_Rec2020) -> Rec2020 {
+rec2020_encode :: #force_inline proc "contextless" (rec: Linear_Rec2020) -> Rec2020 {
 	return Rec2020{
-		_transfer_encode(linear.r),
-		_transfer_encode(linear.g),
-		_transfer_encode(linear.b),
+		_transfer_encode(rec.r),
+		_transfer_encode(rec.g),
+		_transfer_encode(rec.b),
 	}
 }
 
 @(require_results)
-rec2020_decode :: #force_inline proc "contextless" (rec2020: Rec2020) -> Linear_Rec2020 {
+rec2020_decode :: #force_inline proc "contextless" (rec: Rec2020) -> Linear_Rec2020 {
 	return Linear_Rec2020{
-		_transfer_decode(rec2020.r),
-		_transfer_decode(rec2020.g),
-		_transfer_decode(rec2020.b),
+		_transfer_decode(rec.r),
+		_transfer_decode(rec.g),
+		_transfer_decode(rec.b),
 	}
 }
 

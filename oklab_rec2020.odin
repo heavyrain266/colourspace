@@ -21,24 +21,16 @@ _REC2020_TO_LMS :: #row_major matrix[3, 3]f32{
 
 @(require_results)
 oklab_to_rec2020 :: #force_inline proc "contextless" (lab: OKLab) -> Linear_Rec2020 {
-	lms : Colour = _OKLAB_TO_LMS * lab
+	lms : Colour = (_OKLAB_TO_LMS * lab)
 
-	return _LMS_TO_REC2020 * Linear_Rec2020{
-		lms.x * lms.x * lms.x,
-		lms.y * lms.y * lms.y,
-		lms.z * lms.z * lms.z,
-	}
+	return (_LMS_TO_REC2020 * Linear_Rec2020{cube(lms.x), cube(lms.y), cube(lms.z)})
 }
 
 @(require_results)
 rec2020_to_oklab :: #force_inline proc "contextless" (rec2020: Linear_Rec2020) -> OKLab {
-	lms : Colour = _REC2020_TO_LMS * rec2020
+	lms : Colour = (_REC2020_TO_LMS * rec2020)
 
-	return _LMS_TO_OKLAB * OKLab{
-		math.cbrt(lms.x),
-		math.cbrt(lms.y),
-		math.cbrt(lms.z),
-	}
+	return (_LMS_TO_OKLAB * OKLab{math.cbrt(lms.x), math.cbrt(lms.y), math.cbrt(lms.z)})
 }
 
 

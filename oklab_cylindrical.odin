@@ -5,20 +5,12 @@ import "core:math"
 
 @(require_results)
 oklch_to_oklab :: #force_inline proc "contextless" (lch: OKLCh) -> OKLab {
-	l : f32 = lch.x
-	a : f32 = lch.y * math.cos(lch.z)
-	b : f32 = lch.y * math.sin(lch.z)
-
-	return OKLab{l, a, b}
+	return OKLab{lch.x, (lch.y * math.cos(lch.z)), (lch.y * math.sin(lch.z))}
 }
 
 @(require_results) // Hue in radians; use `math.to_degrees(h)` if needed
 oklab_to_oklch :: #force_inline proc "contextless" (lab: OKLab) -> OKLCh {
-	l : f32 = lab.x
-	c : f32 = math.sqrt(lab.y * lab.y + lab.z * lab.z)
-	h : f32 = math.atan2(lab.z, lab.y)
-
-	return OKLCh{l, c, h}
+	return OKLCh{lab.x, math.hypot(lab.y, lab.z), math.atan2(lab.z, lab.y)}
 }
 
 

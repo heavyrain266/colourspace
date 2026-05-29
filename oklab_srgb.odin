@@ -21,24 +21,16 @@ _SRGB_TO_LMS :: #row_major matrix[3, 3]f32{
 
 @(require_results)
 oklab_to_srgb :: #force_inline proc "contextless" (lab: OKLab) -> Linear_sRGB {
-	lms : Colour = _OKLAB_TO_LMS * lab
+	lms : Colour = (_OKLAB_TO_LMS * lab)
 
-	return _LMS_TO_SRGB * Linear_sRGB{
-		lms.x * lms.x * lms.x,
-		lms.y * lms.y * lms.y,
-		lms.z * lms.z * lms.z,
-	}
+	return (_LMS_TO_SRGB * Linear_sRGB{cube(lms.x), cube(lms.y), cube(lms.z)})
 }
 
 @(require_results)
 srgb_to_oklab :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKLab {
-	lms : Colour = _SRGB_TO_LMS * srgb
+	lms : Colour = (_SRGB_TO_LMS * srgb)
 
-	return _LMS_TO_OKLAB * OKLab{
-		math.cbrt(lms.r),
-		math.cbrt(lms.g),
-		math.cbrt(lms.b),
-	}
+	return (_LMS_TO_OKLAB * OKLab{math.cbrt(lms.r), math.cbrt(lms.g), math.cbrt(lms.b)})
 }
 
 

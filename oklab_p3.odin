@@ -21,24 +21,16 @@ _P3_TO_LMS :: #row_major matrix[3, 3]f32{
 
 @(require_results)
 oklab_to_p3 :: #force_inline proc "contextless" (lab: OKLab) -> Linear_P3 {
-	lms : Colour = _OKLAB_TO_LMS * lab
+	lms : Colour = (_OKLAB_TO_LMS * lab)
 
-	return _LMS_TO_P3 * Linear_P3{
-		lms.x * lms.x * lms.x,
-		lms.y * lms.y * lms.y,
-		lms.z * lms.z * lms.z,
-	}
+	return (_LMS_TO_P3 * Linear_P3{cube(lms.x), cube(lms.y), cube(lms.z)})
 }
 
 @(require_results)
 p3_to_oklab :: #force_inline proc "contextless" (p3: Linear_P3) -> OKLab {
-	lms : Colour = _P3_TO_LMS * p3
+	lms : Colour = (_P3_TO_LMS * p3)
 
-	return _LMS_TO_OKLAB * OKLab{
-		math.cbrt(lms.x),
-		math.cbrt(lms.y),
-		math.cbrt(lms.z),
-	}
+	return (_LMS_TO_OKLAB * OKLab{math.cbrt(lms.x), math.cbrt(lms.y), math.cbrt(lms.z)})
 }
 
 
