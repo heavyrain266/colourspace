@@ -22,6 +22,16 @@ oklab_to_oklch :: #force_inline proc "contextless" (lab: OKLab) -> OKLCh {
 }
 
 
+@(private)
+okhsv_to_oklab :: #force_inline proc "contextless" (hsv: OKHSV) -> OKLab {
+	return OKLab{}
+}
+
+@(private)
+oklab_to_okhsv :: #force_inline proc "contextless" (lab: OKLab) -> OKHSV {
+	return OKHSV{}
+}
+
 
 @(private)
 okhsl_to_oklab :: #force_inline proc "contextless" (hsl: OKHSL) -> OKLab {
@@ -31,16 +41,4 @@ okhsl_to_oklab :: #force_inline proc "contextless" (hsl: OKHSL) -> OKLab {
 @(private)
 oklab_to_okhsl :: #force_inline proc "contextless" (lab: OKLab) -> OKHSL {
 	return OKHSL{}
-}
-
-
-
-@(private)
-okhsv_to_oklab :: #force_inline proc "contextless" (hsv: OKHSV) -> OKLab {
-	return OKLab{}
-}
-
-@(private)
-oklab_to_okhsv :: #force_inline proc "contextless" (lab: OKLab) -> OKHSV {
-	return OKHSV{}
 }

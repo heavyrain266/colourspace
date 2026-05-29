@@ -48,3 +48,25 @@ oklch_to_p3 :: #force_inline proc "contextless" (lch: OKLCh) -> Linear_P3 {
 p3_to_oklch :: #force_inline proc "contextless" (p3: Linear_P3) -> OKLCh {
 	return oklab_to_oklch(p3_to_oklab(p3))
 }
+
+
+@(private)
+okhsv_to_p3 :: #force_inline proc "contextless" (hsv: OKHSV) -> Linear_P3 {
+	return oklab_to_p3(okhsv_to_oklab(hsv))
+}
+
+@(private)
+p3_to_okhsv :: #force_inline proc "contextless" (p3: Linear_P3) -> OKHSV {
+	return oklab_to_okhsv(p3_to_oklab(p3))
+}
+
+
+@(private)
+okhsl_to_p3 :: #force_inline proc "contextless" (hsl: OKHSL) -> Linear_P3 {
+	return oklab_to_p3(okhsl_to_oklab(hsl))
+}
+
+@private
+p3_to_okhsl :: #force_inline proc "contextless" (p3: Linear_P3) -> OKHSL {
+	return oklab_to_okhsl(p3_to_oklab(p3))
+}

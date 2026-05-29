@@ -7,8 +7,8 @@ Colour       :: [3]f32
 Chromaticity :: [2]f32
 
 OKLCh            :: distinct Colour
-@(private) OKHSL :: distinct Colour
 @(private) OKHSV :: distinct Colour
+@(private) OKHSL :: distinct Colour
 OKLab            :: distinct Colour
 
 CIE_XYZ     :: distinct Colour

@@ -38,6 +38,7 @@ srgb_to_oklab :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKLab {
 	}
 }
 
+
 @(require_results)
 oklch_to_srgb :: #force_inline proc "contextless" (lch: OKLCh) -> Linear_sRGB {
 	return oklab_to_srgb(oklch_to_oklab(lch))
@@ -46,4 +47,26 @@ oklch_to_srgb :: #force_inline proc "contextless" (lch: OKLCh) -> Linear_sRGB {
 @(require_results)
 srgb_to_oklch :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKLCh {
 	return oklab_to_oklch(srgb_to_oklab(srgb))
+}
+
+
+@(private)
+okhsv_to_srgb :: #force_inline proc "contextless" (hsv: OKHSV) -> Linear_sRGB {
+	return oklab_to_srgb(okhsv_to_oklab(hsv))
+}
+
+@(private)
+srgb_to_okhsv :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKHSV {
+	return oklab_to_okhsv(srgb_to_oklab(srgb))
+}
+
+
+@(private)
+okhsl_to_srgb :: #force_inline proc "contextless" (hsl: OKHSL) -> Linear_sRGB {
+	return oklab_to_srgb(okhsl_to_oklab(hsl))
+}
+
+@private
+srgb_to_okhsl :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKHSL {
+	return oklab_to_okhsl(srgb_to_oklab(srgb))
 }
