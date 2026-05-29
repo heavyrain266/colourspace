@@ -3,6 +3,9 @@ package colourspace
 import "core:math"
 
 
+// composed Linear LMS <-> Linear P3 transforms
+// product of XYZ <-> P3 and XYZ <-> LMS matrices
+
 _LMS_TO_P3 :: #row_major matrix[3, 3]f32{
 	 2.4934969, -0.9312640, -0.4026590,
 	-0.8291050,  1.7628300,  0.0236240,
@@ -66,7 +69,7 @@ okhsl_to_p3 :: #force_inline proc "contextless" (hsl: OKHSL) -> Linear_P3 {
 	return oklab_to_p3(okhsl_to_oklab(hsl))
 }
 
-@private
+@(private)
 p3_to_okhsl :: #force_inline proc "contextless" (p3: Linear_P3) -> OKHSL {
 	return oklab_to_okhsl(p3_to_oklab(p3))
 }

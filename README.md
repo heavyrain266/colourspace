@@ -7,6 +7,10 @@
 - [A perceptual color space for image processing](https://bottosson.github.io/posts/oklab/)
 - [Two new color spaces for color picking - Okhsv and Okhsl](https://bottosson.github.io/posts/colorpicker/)
 
+### ITU-R (Rec. 2020)
+
+- [Recommendation ITU-R BT.2020-2 - Parameter values for ultra-high definition television systems](https://www.itu.int/rec/R-REC-BT.2020)
+
 ### W3C / CSS Working Group
 
 - [CSS Color Module Level 4 - Specifying Lab and LCH](https://www.w3.org/TR/css-color-4/#lab-colors)

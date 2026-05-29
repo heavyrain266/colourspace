@@ -3,23 +3,28 @@ package colourspace
 import "core:math"
 
 
-Colour       :: [3]f32
-Chromaticity :: [2]f32
+Colour           :: [3]f32
+Chromaticity     :: [2]f32
 
 OKLCh            :: distinct Colour
 @(private) OKHSV :: distinct Colour
 @(private) OKHSL :: distinct Colour
 OKLab            :: distinct Colour
 
-CIE_XYZ     :: distinct Colour
-CIE_YXY     :: distinct Colour
+CIE_XYZ          :: distinct Colour
+CIE_YXY          :: distinct Colour
 
-Linear_P3   :: distinct Colour
-Linear_sRGB :: distinct Colour
+Linear_sRGB      :: distinct Colour
+Linear_P3        :: distinct Colour
+Linear_Rec2020   :: distinct Colour
 
-sRGB        :: distinct Colour
-Display_P3  :: distinct Colour
+sRGB             :: distinct Colour
+Display_P3       :: distinct Colour
+Rec2020          :: distinct Colour
 
+
+// OKLab <-> Linear LMS transforms
+// Björn Ottosson, https://bottosson.github.io/posts/oklab/
 
 _OKLAB_TO_LMS :: #row_major matrix[3, 3]f32{
 	1.0,  0.3963377774,  0.2158037573,
@@ -35,7 +40,7 @@ _LMS_TO_OKLAB :: #row_major matrix[3, 3]f32{
 
 
 
-@(require_results)
+@(require_results) // Hue in degrees, converted to radians internally
 oklch :: #force_inline proc "contextless" (l, c, h: f32) -> OKLCh {
 	return OKLCh{l, c, math.to_radians(h)}
 }
@@ -64,4 +69,9 @@ srgb :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_sRGB {
 @(require_results)
 p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_P3 {
 	return Linear_P3{r, g, b}
+}
+
+@(require_results)
+rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_Rec2020 {
+	return Linear_Rec2020{r, g, b}
 }

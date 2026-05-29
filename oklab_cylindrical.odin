@@ -12,7 +12,7 @@ oklch_to_oklab :: #force_inline proc "contextless" (lch: OKLCh) -> OKLab {
 	return OKLab{l, a, b}
 }
 
-@(require_results)
+@(require_results) // Hue in radians; use `math.to_degrees(h)` if needed
 oklab_to_oklch :: #force_inline proc "contextless" (lab: OKLab) -> OKLCh {
 	l : f32 = lab.x
 	c : f32 = math.sqrt(lab.y * lab.y + lab.z * lab.z)

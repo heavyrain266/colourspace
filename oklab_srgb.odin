@@ -3,6 +3,9 @@ package colourspace
 import "core:math"
 
 
+// composed Linear LMS <-> Linear sRGB transforms
+// product of XYZ <-> sRGB and XYZ <-> LMS matrices
+
 _LMS_TO_SRGB :: #row_major matrix[3, 3]f32{
 	 4.0767416621, -3.3077115913,  0.2309699292,
 	-1.2684380046,  2.6097574011, -0.3413193965,
@@ -66,7 +69,7 @@ okhsl_to_srgb :: #force_inline proc "contextless" (hsl: OKHSL) -> Linear_sRGB {
 	return oklab_to_srgb(okhsl_to_oklab(hsl))
 }
 
-@private
+@(private)
 srgb_to_okhsl :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKHSL {
 	return oklab_to_okhsl(srgb_to_oklab(srgb))
 }

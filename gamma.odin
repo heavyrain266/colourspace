@@ -31,13 +31,31 @@ p3_encode :: #force_inline proc "contextless" (linear: Linear_P3) -> Display_P3 
 	}
 }
 
-
 @(require_results)
 p3_decode :: #force_inline proc "contextless" (p3: Display_P3) -> Linear_P3 {
 	return Linear_P3{
 		_transfer_decode(p3.r),
 		_transfer_decode(p3.g),
 		_transfer_decode(p3.b),
+	}
+}
+
+
+@(require_results)
+rec2020_encode :: #force_inline proc "contextless" (linear: Linear_Rec2020) -> Rec2020 {
+	return Rec2020{
+		_transfer_encode(linear.r),
+		_transfer_encode(linear.g),
+		_transfer_encode(linear.b),
+	}
+}
+
+@(require_results)
+rec2020_decode :: #force_inline proc "contextless" (rec2020: Rec2020) -> Linear_Rec2020 {
+	return Linear_Rec2020{
+		_transfer_decode(rec2020.r),
+		_transfer_decode(rec2020.g),
+		_transfer_decode(rec2020.b),
 	}
 }
 
