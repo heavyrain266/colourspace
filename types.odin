@@ -3,12 +3,16 @@ package colourspace
 import "core:math"
 
 
-Colour :: [3]f32
+Colour       :: [3]f32
+Chromaticity :: [2]f32
 
 OKLCh            :: distinct Colour
 @(private) OKHSL :: distinct Colour
 @(private) OKHSV :: distinct Colour
 OKLab            :: distinct Colour
+
+CIE_XYZ     :: distinct Colour
+CIE_YXY     :: distinct Colour
 
 Linear_P3   :: distinct Colour
 Linear_sRGB :: distinct Colour
