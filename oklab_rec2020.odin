@@ -6,13 +6,13 @@ import "core:math"
 // composed Linear LMS <-> Linear Rec. 2020 transforms
 // product of XYZ <-> Rec. 2020 and XYZ <-> LMS matrices
 
-_LMS_TO_REC2020 :: #row_major matrix[3, 3]f32{
+_LINEAR_LMS_TO_LINEAR_REC2020 :: #row_major matrix[3, 3]f32{
 	 2.13990672, -1.24638932,  0.10648233,
 	-0.88473587,  2.16323093, -0.27849495,
 	-0.04857366, -0.45450337,  1.50307693,
 }
 
-_REC2020_TO_LMS :: #row_major matrix[3, 3]f32{
+_LINEAR_REC2020_TO_LMS :: #row_major matrix[3, 3]f32{
 	0.61675579, 0.36019838, 0.02304595,
 	0.26513306, 0.63583937, 0.09902758,
 	0.10010263, 0.20390659, 0.69599085,
@@ -21,16 +21,24 @@ _REC2020_TO_LMS :: #row_major matrix[3, 3]f32{
 
 @(require_results)
 oklab_to_rec2020 :: #force_inline proc "contextless" (lab: OKLab) -> Linear_Rec2020 {
-	lms : Colour = (_OKLAB_TO_LMS * lab)
+	lms : _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
 
-	return (_LMS_TO_REC2020 * Linear_Rec2020{cube(lms.x), cube(lms.y), cube(lms.z)})
+	return (_LINEAR_LMS_TO_LINEAR_REC2020 * Linear_Rec2020{
+		cube(lms.x),
+		cube(lms.y),
+		cube(lms.z)
+	})
 }
 
 @(require_results)
 rec2020_to_oklab :: #force_inline proc "contextless" (rec2020: Linear_Rec2020) -> OKLab {
-	lms : Colour = (_REC2020_TO_LMS * rec2020)
+	lms : _Linear_LMS = (_LINEAR_REC2020_TO_LMS * rec2020)
 
-	return (_LMS_TO_OKLAB * OKLab{math.cbrt(lms.x), math.cbrt(lms.y), math.cbrt(lms.z)})
+	return (_LINEAR_LMS_TO_OKLAB * OKLab{
+		math.cbrt(lms.x),
+		math.cbrt(lms.y),
+		math.cbrt(lms.z)
+	})
 }
 
 

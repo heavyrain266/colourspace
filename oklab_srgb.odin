@@ -6,13 +6,13 @@ import "core:math"
 // composed Linear LMS <-> Linear sRGB transforms
 // product of XYZ <-> sRGB and XYZ <-> LMS matrices
 
-_LMS_TO_SRGB :: #row_major matrix[3, 3]f32{
+_LINEAR_LMS_TO_LINEAR_SRGB :: #row_major matrix[3, 3]f32{
 	 4.0767416621, -3.3077115913,  0.2309699292,
 	-1.2684380046,  2.6097574011, -0.3413193965,
 	-0.0041960863, -0.7034186147,  1.7076147010,
 }
 
-_SRGB_TO_LMS :: #row_major matrix[3, 3]f32{
+_LINEAR_SRGB_TO_LINEAR_LMS :: #row_major matrix[3, 3]f32{
 	0.4122214708, 0.5363325363, 0.0514459929,
 	0.2119034982, 0.6806995451, 0.1073969566,
 	0.0883024619, 0.2817188376, 0.6299787005,
@@ -21,16 +21,24 @@ _SRGB_TO_LMS :: #row_major matrix[3, 3]f32{
 
 @(require_results)
 oklab_to_srgb :: #force_inline proc "contextless" (lab: OKLab) -> Linear_sRGB {
-	lms : Colour = (_OKLAB_TO_LMS * lab)
+	lms : _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
 
-	return (_LMS_TO_SRGB * Linear_sRGB{cube(lms.x), cube(lms.y), cube(lms.z)})
+	return (_LINEAR_LMS_TO_LINEAR_SRGB * Linear_sRGB{
+		cube(lms.x),
+		cube(lms.y),
+		cube(lms.z),
+	})
 }
 
 @(require_results)
 srgb_to_oklab :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKLab {
-	lms : Colour = (_SRGB_TO_LMS * srgb)
+	lms : _Linear_LMS = (_LINEAR_SRGB_TO_LINEAR_LMS * srgb)
 
-	return (_LMS_TO_OKLAB * OKLab{math.cbrt(lms.r), math.cbrt(lms.g), math.cbrt(lms.b)})
+	return (_LINEAR_LMS_TO_OKLAB * OKLab{
+		math.cbrt(lms.r),
+		math.cbrt(lms.g),
+		math.cbrt(lms.b),
+	})
 }
 
 

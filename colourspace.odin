@@ -31,30 +31,29 @@ linear_srgb :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_sRGB {
 }
 
 @(require_results)
-srgb :: #force_inline proc "contextless" (r, g, b: f32) -> sRGB {
-	return srgb_encode(Linear_sRGB{r, g, b})
-}
-
-
-@(require_results)
 linear_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_P3 {
 	return Linear_P3{r, g, b}
 }
-
-@(require_results)
-display_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Display_P3 {
-	return p3_encode(Linear_P3{r, g, b})
-}
-
 
 @(require_results)
 linear_rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_Rec2020 {
 	return Linear_Rec2020{r, g, b}
 }
 
+
+@(require_results)
+srgb :: #force_inline proc "contextless" (r, g, b: f32) -> sRGB {
+	return linear_srgb_encode(Linear_sRGB{r, g, b})
+}
+
+@(require_results)
+display_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Display_P3 {
+	return linear_p3_encode(Linear_P3{r, g, b})
+}
+
 @(require_results)
 rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Rec2020 {
-	return rec2020_encode(Linear_Rec2020{r, g, b})
+	return linear_rec2020_encode(Linear_Rec2020{r, g, b})
 }
 
 

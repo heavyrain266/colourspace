@@ -4,7 +4,7 @@ import "core:math"
 
 
 @(require_results)
-srgb_encode :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> sRGB {
+linear_srgb_encode :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> sRGB {
 	return sRGB{
 		_transfer_encode(srgb.r),
 		_transfer_encode(srgb.g),
@@ -23,7 +23,7 @@ srgb_decode :: #force_inline proc "contextless" (srgb: sRGB) -> Linear_sRGB {
 
 
 @(require_results)
-p3_encode :: #force_inline proc "contextless" (p3: Linear_P3) -> Display_P3 {
+linear_p3_encode :: #force_inline proc "contextless" (p3: Linear_P3) -> Display_P3 {
 	return Display_P3{
 		_transfer_encode(p3.r),
 		_transfer_encode(p3.g),
@@ -42,7 +42,7 @@ p3_decode :: #force_inline proc "contextless" (p3: Display_P3) -> Linear_P3 {
 
 
 @(require_results)
-rec2020_encode :: #force_inline proc "contextless" (rec: Linear_Rec2020) -> Rec2020 {
+linear_rec2020_encode :: #force_inline proc "contextless" (rec: Linear_Rec2020) -> Rec2020 {
 	return Rec2020{
 		_transfer_encode(rec.r),
 		_transfer_encode(rec.g),
@@ -61,7 +61,7 @@ rec2020_decode :: #force_inline proc "contextless" (rec: Rec2020) -> Linear_Rec2
 
 
 // IEC 61966-2-1 transfer functions
-// linearisation threshold: 0.04045, gamma threshold: 0.0031308
+// gamma threshold: 0.0031308, linearisation threshold: 0.04045
 
 @(require_results)
 _transfer_encode :: #force_inline proc "contextless" (x: f32) -> f32 {
