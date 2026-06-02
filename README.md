@@ -8,6 +8,10 @@
 
 Gamut mapping (in progress) follows Björn Ottosson's cusp-projection approach rather than the chroma-reduction method in CSS Color Module 4, which produces hue drift on sRGB displays, most visibly P3 blues rendering as purple.
 
+### High Dynamic Range (HDR) Support
+
+Rec. 2020 alongside (in-progress) Perceptual Quantizer and Hybrid Log-Gamma transfer functions are kept behind a compile-time flag `-define:COLOURSPACE_ENABLE_HDR`.
+
 ### Quick Start
 
 Construct colours in any covered space, convert between them freely, and encode for display. All conversions are hue-preserving and operate in linear light unless explicitly encoded.

@@ -3,6 +3,9 @@ package colourspace
 import "core:math"
 
 
+ENABLE_HDR :: #config(COLOURSPACE_ENABLE_HDR, false)
+
+
 @(require_results) // Hue in degrees, converted to radians internally
 oklch :: #force_inline proc "contextless" (l, c, h: f32) -> OKLCh {
 	return OKLCh{l, c, math.to_radians(h)}
@@ -35,11 +38,12 @@ linear_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_P3 {
 	return Linear_P3{r, g, b}
 }
 
-@(require_results)
-linear_rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_Rec2020 {
-	return Linear_Rec2020{r, g, b}
+when ENABLE_HDR {
+	@(require_results)
+	linear_rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_Rec2020 {
+		return Linear_Rec2020{r, g, b}
+	}
 }
-
 
 @(require_results)
 srgb :: #force_inline proc "contextless" (r, g, b: f32) -> sRGB {
@@ -51,11 +55,12 @@ display_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Display_P3 {
 	return linear_p3_encode(Linear_P3{r, g, b})
 }
 
-@(require_results)
-rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Rec2020 {
-	return linear_rec2020_encode(Linear_Rec2020{r, g, b})
+when ENABLE_HDR {
+	@(require_results)
+	rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Rec2020 {
+		return linear_rec2020_encode(Linear_Rec2020{r, g, b})
+	}
 }
-
 
 
 @(private, require_results)

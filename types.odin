@@ -15,11 +15,14 @@ CIE_YXY          :: distinct Colour
 _Linear_LMS      :: distinct Colour
 Linear_sRGB      :: distinct Colour
 Linear_P3        :: distinct Colour
-Linear_Rec2020   :: distinct Colour
 
 sRGB             :: distinct Colour
 Display_P3       :: distinct Colour
-Rec2020          :: distinct Colour
+
+when ENABLE_HDR {
+	Linear_Rec2020   :: distinct Colour
+	Rec2020          :: distinct Colour
+}
 
 
 // OKLab <-> Linear LMS transforms

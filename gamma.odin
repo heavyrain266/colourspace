@@ -41,21 +41,23 @@ p3_decode :: #force_inline proc "contextless" (p3: Display_P3) -> Linear_P3 {
 }
 
 
-@(require_results)
-linear_rec2020_encode :: #force_inline proc "contextless" (rec: Linear_Rec2020) -> Rec2020 {
-	return Rec2020{
-		_transfer_encode(rec.r),
-		_transfer_encode(rec.g),
-		_transfer_encode(rec.b),
+when ENABLE_HDR {
+	@(require_results)
+	linear_rec2020_encode :: #force_inline proc "contextless" (rec: Linear_Rec2020) -> Rec2020 {
+		return Rec2020{
+			_transfer_encode(rec.r),
+			_transfer_encode(rec.g),
+			_transfer_encode(rec.b),
+		}
 	}
-}
 
-@(require_results)
-rec2020_decode :: #force_inline proc "contextless" (rec: Rec2020) -> Linear_Rec2020 {
-	return Linear_Rec2020{
-		_transfer_decode(rec.r),
-		_transfer_decode(rec.g),
-		_transfer_decode(rec.b),
+	@(require_results)
+	rec2020_decode :: #force_inline proc "contextless" (rec: Rec2020) -> Linear_Rec2020 {
+		return Linear_Rec2020{
+			_transfer_decode(rec.r),
+			_transfer_decode(rec.g),
+			_transfer_decode(rec.b),
+		}
 	}
 }
 
