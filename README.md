@@ -2,19 +2,23 @@
 
 *A pragmatic set of modern colour space transforms*
 
+
 ## Overview
 
 `colourspace` provides correct, minimal colour space transforms for UI frameworks and creative tooling, covering OKLCh, OKLab, sRGB, Display P3, and Rec. 2020. Transforms between linear RGB spaces are direct matrix multiplications with pre-computed matrices. Perceptual manipulation and colour appearance work uses OKLab as the working space.
 
 Gamut mapping (in progress) follows Björn Ottosson's cusp-projection approach rather than the chroma-reduction method in CSS Color Module 4, which produces hue drift on sRGB displays, most visibly P3 blues rendering as purple.
 
+
 ### High Dynamic Range (HDR) Support
 
 Rec. 2020 alongside (in-progress) Perceptual Quantizer and Hybrid Log-Gamma transfer functions are kept behind a compile-time flag `-define:COLOURSPACE_ENABLE_HDR`.
 
+
 ### Quick Start
 
 Construct colours in any covered space, convert between them freely, and encode for display. All conversions are hue-preserving and operate in linear light unless explicitly encoded.
+
 
 ```odin
 package main
@@ -47,6 +51,7 @@ main :: proc() {
 }
 ```
 
+
 ## References
 
 ### Björn Ottosson
@@ -55,15 +60,13 @@ main :: proc() {
 - [Two new color spaces for color picking - Okhsv and Okhsl](https://bottosson.github.io/posts/colorpicker/)
 - [sRGB gamut clipping](https://bottosson.github.io/posts/gamutclipping/)
 
+
+### International Color Consortium (ICC)
+
+- [sRGB transfer function (IEC 61966-2-1)](https://www.color.org/chardata/rgb/srgb.xalter)
+- [Display P3 Color Encoding](https://registry.color.org/rgb-registry/displayp3)
+
+
 ### ITU-R (Rec. 2020)
 
 - [Recommendation ITU-R BT.2020-2 - Parameter values for ultra-high definition television systems](https://www.itu.int/rec/R-REC-BT.2020)
-
-### W3C / CSS Working Group
-
-- [CSS Color Module Level 4 - Specifying Lab and LCH](https://www.w3.org/TR/css-color-4/#lab-colors)
-- [CSS Color Module Level 4 - Gamut Mapping](https://www.w3.org/TR/css-color-4/#gamut-mapping)
-
-### International Color Consortium
-
-- [sRGB transfer function (IEC 61966-2-1)](https://www.color.org/chardata/rgb/srgb.xalter)

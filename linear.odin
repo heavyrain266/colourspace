@@ -19,7 +19,6 @@ srgb_to_p3 :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> Linear_P3 
 	return (_LINEAR_SRGB_TO_LINEAR_P3 * Linear_P3{srgb.r, srgb.g, srgb.b})
 }
 
-
 @(require_results)
 p3_to_srgb :: #force_inline proc "contextless" (p3: Linear_P3) -> Linear_sRGB {
 	return (_LINEAR_P3_TO_LINEAR_SRGB * Linear_sRGB{p3.r, p3.g, p3.b})
