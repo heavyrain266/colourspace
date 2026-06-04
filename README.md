@@ -5,10 +5,9 @@
 
 ## Overview
 
-`colourspace` provides correct, minimal colour space transforms for UI frameworks and creative tooling, covering OKLCh, OKLab, sRGB, Display P3, and Rec. 2020. Transforms between linear RGB spaces are direct matrix multiplications with pre-computed matrices. Perceptual manipulation and colour appearance work uses OKLab as the working space.
+`colourspace` provides correct, minimal colour space transforms optimised for UI frameworks and creative tooling, covering OKLCh, OKLab, sRGB, Display P3, and Rec. 2020. Transforms are direct matrix multiplications with pre-computed matrices derived with `tools/builder.odin`. Perceptual manipulation and colour appearance work uses OKLab as the working space.
 
-Gamut mapping (in progress) follows Björn Ottosson's cusp-projection approach rather than the chroma-reduction method in CSS Color Module 4, which produces hue drift on sRGB displays, most visibly P3 blues rendering as purple.
-
+Gamut mapping is explicitly out of scope. Out-of-gamut values are passed through as-is, and handling is left to the caller — typically shader-side in a display pipeline.
 
 ### High Dynamic Range (HDR) Support
 
