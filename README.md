@@ -11,7 +11,7 @@ Gamut mapping is explicitly out of scope. Out-of-gamut values are passed through
 
 ### High Dynamic Range (HDR) Support
 
-Rec. 2020 alongside (in-progress) Perceptual Quantizer and Hybrid Log-Gamma transfer functions are kept behind a compile-time flag `-define:COLOURSPACE_ENABLE_HDR`.
+Rec. 2020 alongside Perceptual Quantizer and Hybrid Log-Gamma transfer functions are kept behind a compile-time flag `-define:COLOURSPACE_ENABLE_HDR`.
 
 
 ### Quick Start
