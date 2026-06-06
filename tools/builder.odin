@@ -4,8 +4,8 @@ import "core:fmt"
 import "core:math/linalg"
 
 
-D65 :: linalg.Vector2f64{0.3127, 0.3290}
-XYZ :: linalg.Vector3f64
+D65     :: linalg.Vector2f64{0.3127, 0.3290}
+CIE_XYZ :: linalg.Vector3f64
 
 
 SRGB_PRIMARIES :: linalg.Matrix3f64{
@@ -26,25 +26,27 @@ BT2020_PRIMARIES :: linalg.Matrix3f64{
 	0.131, 0.046, 0.823,
 }
 
-XYZ_TO_LINEAR_LMS :: linalg.Matrix3f64{
+
+CIE_XYZ_TO_LINEAR_LMS :: linalg.Matrix3f64{
 	0.8189330101, 0.3618667424, -0.1288597137,
 	0.0329845436, 0.9293118715, 0.0361456387,
 	0.0482003018, 0.2643662691, 0.6338517070,
 }
 
+
 @(require_results)
 rgb_to_xyz :: #force_inline proc "contextless" (p: linalg.Matrix3f64) -> linalg.Matrix3f64 {
-	r: XYZ = {p[0, 0], p[0, 1], p[0, 2]} / p[0, 1]
-	g: XYZ = {p[1, 0], p[1, 1], p[1, 2]} / p[1, 1]
-	b: XYZ = {p[2, 0], p[2, 1], p[2, 2]} / p[2, 1]
+	r: CIE_XYZ = {p[0, 0], p[0, 1], p[0, 2]} / p[0, 1]
+	g: CIE_XYZ = {p[1, 0], p[1, 1], p[1, 2]} / p[1, 1]
+	b: CIE_XYZ = {p[2, 0], p[2, 1], p[2, 2]} / p[2, 1]
 	m: linalg.Matrix3f64 = linalg.Matrix3f64 {
 		r.x, g.x, b.x,
 		r.y, g.y, b.y,
 		r.z, g.z, b.z,
 	}
 
-	w: XYZ = XYZ{D65.x, D65.y, 1.0 - D65.x - D65.y} / D65.y
-	s: XYZ = linalg.mul(linalg.inverse(m), w)
+	w: CIE_XYZ = CIE_XYZ{D65.x, D65.y, 1.0 - D65.x - D65.y} / D65.y
+	s: CIE_XYZ = linalg.mul(linalg.inverse(m), w)
 	diag_s: linalg.Matrix3f64 = linalg.Matrix3f64{
 		s.x, 0,   0,
 		0,   s.y, 0,
@@ -56,7 +58,7 @@ rgb_to_xyz :: #force_inline proc "contextless" (p: linalg.Matrix3f64) -> linalg.
 
 @(require_results)
 rgb_to_lms :: #force_inline proc "contextless" (m: linalg.Matrix3f64) -> linalg.Matrix3f64 {
-	return linalg.mul(XYZ_TO_LINEAR_LMS, rgb_to_xyz(m))
+	return linalg.mul(CIE_XYZ_TO_LINEAR_LMS, rgb_to_xyz(m))
 }
 
 emit :: #force_inline proc(name: string, m: linalg.Matrix3f32) {

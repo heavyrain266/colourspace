@@ -24,9 +24,9 @@ when ENABLE_HDR {
 		lms: _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
 
 		return (_LINEAR_LMS_TO_LINEAR_REC2020 * Linear_Rec_2020{
-			cube(lms.x),
-			cube(lms.y),
-			cube(lms.z),
+			lms.x * lms.x * lms.x,
+			lms.y * lms.y * lms.y,
+			lms.z * lms.z * lms.z,
 		})
 	}
 
@@ -50,27 +50,5 @@ when ENABLE_HDR {
 	@(require_results)
 	rec_2020_to_oklch :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OKLCh {
 		return oklab_to_oklch(rec_2020_to_oklab(rec_2020))
-	}
-
-
-	@(private)
-	okhsv_to_rec_2020 :: #force_inline proc "contextless" (hsv: OKHSV) -> Linear_Rec_2020 {
-		return oklab_to_rec_2020(okhsv_to_oklab(hsv))
-	}
-
-	@(private)
-	rec_2020_to_okhsv :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OKHSV {
-		return oklab_to_okhsv(rec_2020_to_oklab(rec_2020))
-	}
-
-
-	@(private)
-	okhsl_to_rec_2020 :: #force_inline proc "contextless" (hsl: OKHSL) -> Linear_Rec_2020 {
-		return oklab_to_rec_2020(okhsl_to_oklab(hsl))
-	}
-
-	@(private)
-	rec_2020_to_okhsl :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OKHSL {
-		return oklab_to_okhsl(rec_2020_to_oklab(rec_2020))
 	}
 }

@@ -6,26 +6,32 @@ import "core:math"
 ENABLE_HDR :: #config(COLOURSPACE_ENABLE_HDR, false)
 
 
+@(require_results)
+oklch_to_oklab :: #force_inline proc "contextless" (lch: OKLCh) -> OKLab {
+	a: f32 = (lch.y * math.cos(lch.z))
+	b: f32 = (lch.y * math.sin(lch.z))
+
+	return OKLab{lch.x, a, b}
+}
+
+@(require_results) // Hue in radians; use `math.to_degrees(h)` if needed
+oklab_to_oklch :: #force_inline proc "contextless" (lab: OKLab) -> OKLCh {
+	c: f32 = math.hypot(lab.y, lab.z)
+	h: f32 = math.atan2(lab.z, lab.y) if c >= math.F32_EPSILON else 0.0
+
+	return OKLCh{lab.x, c, h}
+}
+
+
 @(require_results) // Hue in degrees, converted to radians internally
 oklch :: #force_inline proc "contextless" (l, c, h: f32) -> OKLCh {
 	return OKLCh{l, c, math.to_radians(h)}
-}
-
-@(private) // Hue in degrees, converted to radians internally
-okhsv :: #force_inline proc "contextless" (h, s, v: f32) -> OKHSV {
-	return OKHSV{math.to_radians(h), s, v}
-}
-
-@(private) // Hue in degrees, converted to radians internally
-okhsl :: #force_inline proc "contextless" (h, s, l: f32) -> OKHSL {
-	return OKHSL{math.to_radians(h), s, l}
 }
 
 @(require_results)
 oklab :: #force_inline proc "contextless" (l, a, b: f32) -> OKLab {
 	return OKLab{l, a, b}
 }
-
 
 
 @(require_results)
@@ -38,12 +44,6 @@ linear_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_P3 {
 	return Linear_P3{r, g, b}
 }
 
-when ENABLE_HDR {
-	@(require_results)
-	linear_rec_2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_Rec_2020 {
-		return Linear_Rec_2020{r, g, b}
-	}
-}
 
 @(require_results)
 srgb :: #force_inline proc "contextless" (r, g, b: f32) -> sRGB {
@@ -55,15 +55,15 @@ display_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Display_P3 {
 	return p3_encode(Linear_P3{r, g, b})
 }
 
+
 when ENABLE_HDR {
+	@(require_results)
+	linear_rec_2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_Rec_2020 {
+		return Linear_Rec_2020{r, g, b}
+	}
+
 	@(require_results)
 	rec_2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Rec_2020 {
 		return rec_2020_encode(Linear_Rec_2020{r, g, b})
 	}
-}
-
-
-@(private, require_results)
-cube :: #force_inline proc "contextless" (x: f32) -> f32 {
-	return math.pow(x, 3.0)
 }

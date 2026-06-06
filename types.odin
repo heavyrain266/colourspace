@@ -5,12 +5,9 @@ Colour           :: [3]f32
 Chromaticity     :: [2]f32
 
 OKLCh            :: distinct Colour
-@(private) OKHSV :: distinct Colour
-@(private) OKHSL :: distinct Colour
 OKLab            :: distinct Colour
 
 CIE_XYZ          :: distinct Colour
-CIE_YXY          :: distinct Colour
 
 _Linear_LMS      :: distinct Colour
 Linear_sRGB      :: distinct Colour
