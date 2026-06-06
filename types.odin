@@ -18,7 +18,10 @@ Display_P3       :: distinct Colour
 
 when ENABLE_HDR {
 	Linear_Rec_2020 :: distinct Colour
+
 	Rec_2020        :: distinct Colour
+	Rec_2100_PQ     :: distinct Colour
+	Rec_2100_HLG    :: distinct Colour
 }
 
 

@@ -59,33 +59,47 @@ when ENABLE_HDR {
 	@(require_results)
 	rec_2020_encode :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Rec_2020 {
 		return Rec_2020{
-			_transfer_encode(rec.r),
-			_transfer_encode(rec.g),
-			_transfer_encode(rec.b),
+			_transfer_encode_rec709(rec.r),
+			_transfer_encode_rec709(rec.g),
+			_transfer_encode_rec709(rec.b),
 		}
 	}
 
 	@(require_results)
 	rec_2020_decode :: #force_inline proc "contextless" (rec: Rec_2020) -> Linear_Rec_2020 {
 		return Linear_Rec_2020{
-			_transfer_decode(rec.r),
-			_transfer_decode(rec.g),
-			_transfer_decode(rec.b),
+			_transfer_decode_rec709(rec.r),
+			_transfer_decode_rec709(rec.g),
+			_transfer_decode_rec709(rec.b),
 		}
 	}
 
 
-	@(private)
-	rec_2020_encode_pq :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Rec_2020 {
-		return Rec_2020{
+	// ITU-R BT.2020 / BT.709 transfer functions
+	// gamma threshold: 0.018, linearisation threshold: 0.081
+
+	@(require_results)
+	_transfer_encode_rec709 :: #force_inline proc "contextless" (x: f32) -> f32 {
+		return (1.099 * math.pow(x, 0.45) - 0.099) if (x >= 0.018) else (x * 4.5)
+	}
+
+	@(require_results)
+	_transfer_decode_rec709 :: #force_inline proc "contextless" (x: f32) -> f32 {
+		return math.pow((x + 0.099) / 1.099, 1.0 / 0.45) if (x >= 0.081) else (x / 4.5)
+	}
+
+
+	@(require_results)
+	rec_2020_encode_pq :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Rec_2100_PQ {
+		return Rec_2100_PQ{
 			_transfer_encode_pq(rec.r),
 			_transfer_encode_pq(rec.g),
 			_transfer_encode_pq(rec.b),
 		}
 	}
 
-	@(private)
-	rec_2020_decode_pq :: #force_inline proc "contextless" (rec: Rec_2020) -> Linear_Rec_2020 {
+	@(require_results)
+	rec_2020_decode_pq :: #force_inline proc "contextless" (rec: Rec_2100_PQ) -> Linear_Rec_2020 {
 		return Linear_Rec_2020{
 			_transfer_decode_pq(rec.r),
 			_transfer_decode_pq(rec.g),
@@ -93,18 +107,17 @@ when ENABLE_HDR {
 		}
 	}
 
-
-	@(private)
-	rec_2020_encode_hlg :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Rec_2020 {
-		return Rec_2020{
+	@(require_results)
+	rec_2020_encode_hlg :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Rec_2100_HLG {
+		return Rec_2100_HLG{
 			_transfer_encode_hlg(rec.r),
 			_transfer_encode_hlg(rec.g),
 			_transfer_encode_hlg(rec.b),
 		}
 	}
 
-	@(private)
-	rec_2020_decode_hlg :: #force_inline proc "contextless" (rec: Rec_2020) -> Linear_Rec_2020 {
+	@(require_results)
+	rec_2020_decode_hlg :: #force_inline proc "contextless" (rec: Rec_2100_HLG) -> Linear_Rec_2020 {
 		return Linear_Rec_2020{
 			_transfer_decode_hlg(rec.r),
 			_transfer_decode_hlg(rec.g),
@@ -126,7 +139,7 @@ when ENABLE_HDR {
 	_transfer_decode_pq :: #force_inline proc "contextless" (x: f32) -> f32 {
 		p:   f32 = math.pow(x, (1.0 / 78.84375))
 		num: f32 = math.max(0.0, (p - 0.8359375))
-		den: f32 = (18.8515625 - 18.6875 * p)
+		den: f32 = math.max(math.F32_MIN, (18.8515625 - 18.6875 * p))
 
 		return math.pow((num / den), (1.0 / 0.1593017578125))
 	}
