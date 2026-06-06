@@ -20,8 +20,8 @@ sRGB             :: distinct Colour
 Display_P3       :: distinct Colour
 
 when ENABLE_HDR {
-	Linear_Rec2020   :: distinct Colour
-	Rec2020          :: distinct Colour
+	Linear_Rec_2020 :: distinct Colour
+	Rec_2020        :: distinct Colour
 }
 
 

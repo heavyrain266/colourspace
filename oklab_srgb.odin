@@ -3,8 +3,7 @@ package colourspace
 import "core:math"
 
 
-// composed Linear LMS <-> Linear sRGB transforms
-// product of XYZ <-> sRGB and XYZ <-> LMS matrices
+// Products of XYZ <-> sRGB and XYZ <-> LMS matrices.
 
 _LINEAR_LMS_TO_LINEAR_SRGB :: #row_major matrix[3, 3]f32{
 	4.0771870613, -3.3076224327, 0.2308591902,
@@ -21,7 +20,7 @@ _LINEAR_SRGB_TO_LINEAR_LMS :: #row_major matrix[3, 3]f32{
 
 @(require_results)
 oklab_to_srgb :: #force_inline proc "contextless" (lab: OKLab) -> Linear_sRGB {
-	lms : _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
+	lms: _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
 
 	return (_LINEAR_LMS_TO_LINEAR_SRGB * Linear_sRGB{
 		cube(lms.x),
@@ -32,7 +31,7 @@ oklab_to_srgb :: #force_inline proc "contextless" (lab: OKLab) -> Linear_sRGB {
 
 @(require_results)
 srgb_to_oklab :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKLab {
-	lms : _Linear_LMS = (_LINEAR_SRGB_TO_LINEAR_LMS * srgb)
+	lms: _Linear_LMS = (_LINEAR_SRGB_TO_LINEAR_LMS * srgb)
 
 	return (_LINEAR_LMS_TO_OKLAB * OKLab{
 		math.cbrt(lms.r),

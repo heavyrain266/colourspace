@@ -44,7 +44,7 @@ main :: proc() {
 
 	// Gamma (de)compression
 	decoded: cs.Linear_sRGB = cs.srgb_decode(cs.sRGB{0.5, 0.3, 0.1})
-	encoded: cs.sRGB        = cs.linear_srgb_encode(decoded)
+	encoded: cs.sRGB        = cs.srgb_encode(decoded)
 
 	fmt.println(linear_from_lch, lch_from_linear, linear_from_lab, p3_to_srgb, srgb_to_p3, decoded, encoded)
 }

@@ -3,8 +3,7 @@ package colourspace
 import "core:math"
 
 
-// composed Linear LMS <-> Linear P3 transforms
-// product of XYZ <-> P3 and XYZ <-> LMS matrices
+// Products of XYZ <-> P3 and XYZ <-> LMS matrices.
 
 _LINEAR_LMS_TO_LINEAR_P3 :: #row_major matrix[3, 3]f32{
 	3.1281106472, -2.2570750713, 0.1293047816,
@@ -21,23 +20,23 @@ _LINEAR_P3_TO_LINEAR_LMS :: #row_major matrix[3, 3]f32{
 
 @(require_results)
 oklab_to_p3 :: #force_inline proc "contextless" (lab: OKLab) -> Linear_P3 {
-	lms : _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
+	lms: _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
 
 	return (_LINEAR_LMS_TO_LINEAR_P3 * Linear_P3{
 		cube(lms.x),
 		cube(lms.y),
-		cube(lms.z)
+		cube(lms.z),
 	})
 }
 
 @(require_results)
 p3_to_oklab :: #force_inline proc "contextless" (p3: Linear_P3) -> OKLab {
-	lms : _Linear_LMS = (_LINEAR_P3_TO_LINEAR_LMS * p3)
+	lms: _Linear_LMS = (_LINEAR_P3_TO_LINEAR_LMS * p3)
 
 	return (_LINEAR_LMS_TO_OKLAB * OKLab{
 		math.cbrt(lms.x),
 		math.cbrt(lms.y),
-		math.cbrt(lms.z)
+		math.cbrt(lms.z),
 	})
 }
 

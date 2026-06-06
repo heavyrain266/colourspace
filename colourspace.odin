@@ -40,30 +40,30 @@ linear_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_P3 {
 
 when ENABLE_HDR {
 	@(require_results)
-	linear_rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_Rec2020 {
-		return Linear_Rec2020{r, g, b}
+	linear_rec_2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Linear_Rec_2020 {
+		return Linear_Rec_2020{r, g, b}
 	}
 }
 
 @(require_results)
 srgb :: #force_inline proc "contextless" (r, g, b: f32) -> sRGB {
-	return linear_srgb_encode(Linear_sRGB{r, g, b})
+	return srgb_encode(Linear_sRGB{r, g, b})
 }
 
 @(require_results)
 display_p3 :: #force_inline proc "contextless" (r, g, b: f32) -> Display_P3 {
-	return linear_p3_encode(Linear_P3{r, g, b})
+	return p3_encode(Linear_P3{r, g, b})
 }
 
 when ENABLE_HDR {
 	@(require_results)
-	rec2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Rec2020 {
-		return linear_rec2020_encode(Linear_Rec2020{r, g, b})
+	rec_2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Rec_2020 {
+		return rec_2020_encode(Linear_Rec_2020{r, g, b})
 	}
 }
 
 
 @(private, require_results)
 cube :: #force_inline proc "contextless" (x: f32) -> f32 {
-	return x * x * x
+	return math.pow(x, 3.0)
 }
