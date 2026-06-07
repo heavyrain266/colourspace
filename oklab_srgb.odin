@@ -19,7 +19,7 @@ _LINEAR_SRGB_TO_LINEAR_LMS :: #row_major matrix[3, 3]f32{
 
 
 @(require_results)
-oklab_to_srgb :: #force_inline proc "contextless" (lab: OKLab) -> Linear_sRGB {
+oklab_to_srgb :: #force_inline proc "contextless" (lab: OkLab) -> Linear_sRGB {
 	lms: _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
 
 	return (_LINEAR_LMS_TO_LINEAR_SRGB * Linear_sRGB{
@@ -30,10 +30,10 @@ oklab_to_srgb :: #force_inline proc "contextless" (lab: OKLab) -> Linear_sRGB {
 }
 
 @(require_results)
-srgb_to_oklab :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKLab {
+srgb_to_oklab :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OkLab {
 	lms: _Linear_LMS = (_LINEAR_SRGB_TO_LINEAR_LMS * srgb)
 
-	return (_LINEAR_LMS_TO_OKLAB * OKLab{
+	return (_LINEAR_LMS_TO_OKLAB * OkLab{
 		math.cbrt(lms.r),
 		math.cbrt(lms.g),
 		math.cbrt(lms.b),
@@ -42,11 +42,11 @@ srgb_to_oklab :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKLab {
 
 
 @(require_results)
-oklch_to_srgb :: #force_inline proc "contextless" (lch: OKLCh) -> Linear_sRGB {
+oklch_to_srgb :: #force_inline proc "contextless" (lch: OkLCh) -> Linear_sRGB {
 	return oklab_to_srgb(oklch_to_oklab(lch))
 }
 
 @(require_results)
-srgb_to_oklch :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OKLCh {
+srgb_to_oklch :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OkLCh {
 	return oklab_to_oklch(srgb_to_oklab(srgb))
 }

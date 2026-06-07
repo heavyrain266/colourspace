@@ -19,7 +19,7 @@ _LINEAR_P3_TO_LINEAR_LMS :: #row_major matrix[3, 3]f32{
 
 
 @(require_results)
-oklab_to_p3 :: #force_inline proc "contextless" (lab: OKLab) -> Linear_P3 {
+oklab_to_p3 :: #force_inline proc "contextless" (lab: OkLab) -> Linear_P3 {
 	lms: _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
 
 	return (_LINEAR_LMS_TO_LINEAR_P3 * Linear_P3{
@@ -30,10 +30,10 @@ oklab_to_p3 :: #force_inline proc "contextless" (lab: OKLab) -> Linear_P3 {
 }
 
 @(require_results)
-p3_to_oklab :: #force_inline proc "contextless" (p3: Linear_P3) -> OKLab {
+p3_to_oklab :: #force_inline proc "contextless" (p3: Linear_P3) -> OkLab {
 	lms: _Linear_LMS = (_LINEAR_P3_TO_LINEAR_LMS * p3)
 
-	return (_LINEAR_LMS_TO_OKLAB * OKLab{
+	return (_LINEAR_LMS_TO_OKLAB * OkLab{
 		math.cbrt(lms.x),
 		math.cbrt(lms.y),
 		math.cbrt(lms.z),
@@ -42,11 +42,11 @@ p3_to_oklab :: #force_inline proc "contextless" (p3: Linear_P3) -> OKLab {
 
 
 @(require_results)
-oklch_to_p3 :: #force_inline proc "contextless" (lch: OKLCh) -> Linear_P3 {
+oklch_to_p3 :: #force_inline proc "contextless" (lch: OkLCh) -> Linear_P3 {
 	return oklab_to_p3(oklch_to_oklab(lch))
 }
 
 @(require_results)
-p3_to_oklch :: #force_inline proc "contextless" (p3: Linear_P3) -> OKLCh {
+p3_to_oklch :: #force_inline proc "contextless" (p3: Linear_P3) -> OkLCh {
 	return oklab_to_oklch(p3_to_oklab(p3))
 }

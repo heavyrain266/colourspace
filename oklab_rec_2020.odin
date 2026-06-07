@@ -20,7 +20,7 @@ when ENABLE_HDR {
 
 
 	@(require_results)
-	oklab_to_rec_2020 :: #force_inline proc "contextless" (lab: OKLab) -> Linear_Rec_2020 {
+	oklab_to_rec_2020 :: #force_inline proc "contextless" (lab: OkLab) -> Linear_Rec_2020 {
 		lms: _Linear_LMS = (_OKLAB_TO_LINEAR_LMS * lab)
 
 		return (_LINEAR_LMS_TO_LINEAR_REC2020 * Linear_Rec_2020{
@@ -31,10 +31,10 @@ when ENABLE_HDR {
 	}
 
 	@(require_results)
-	rec_2020_to_oklab :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OKLab {
+	rec_2020_to_oklab :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OkLab {
 		lms: _Linear_LMS = (_LINEAR_REC2020_TO_LMS * rec_2020)
 
-		return (_LINEAR_LMS_TO_OKLAB * OKLab{
+		return (_LINEAR_LMS_TO_OKLAB * OkLab{
 			math.cbrt(lms.x),
 			math.cbrt(lms.y),
 			math.cbrt(lms.z),
@@ -43,12 +43,12 @@ when ENABLE_HDR {
 
 
 	@(require_results)
-	oklch_to_rec_2020 :: #force_inline proc "contextless" (lch: OKLCh) -> Linear_Rec_2020 {
+	oklch_to_rec_2020 :: #force_inline proc "contextless" (lch: OkLCh) -> Linear_Rec_2020 {
 		return oklab_to_rec_2020(oklch_to_oklab(lch))
 	}
 
 	@(require_results)
-	rec_2020_to_oklch :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OKLCh {
+	rec_2020_to_oklch :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OkLCh {
 		return oklab_to_oklch(rec_2020_to_oklab(rec_2020))
 	}
 }

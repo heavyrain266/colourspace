@@ -1,20 +1,20 @@
 package colourspace
 
 
-Colour           :: [3]f32
-Chromaticity     :: [2]f32
+Colour       :: [3]f32
+Chromaticity :: [2]f32
 
-OKLCh            :: distinct Colour
-OKLab            :: distinct Colour
+OkLCh        :: distinct Colour
+OkLab        :: distinct Colour
 
-CIE_XYZ          :: distinct Colour
+CIE_XYZ      :: distinct Colour
 
-_Linear_LMS      :: distinct Colour
-Linear_sRGB      :: distinct Colour
-Linear_P3        :: distinct Colour
+_Linear_LMS  :: distinct Colour
+Linear_sRGB  :: distinct Colour
+Linear_P3    :: distinct Colour
 
-sRGB             :: distinct Colour
-Display_P3       :: distinct Colour
+sRGB         :: distinct Colour
+Display_P3   :: distinct Colour
 
 when ENABLE_HDR {
 	Linear_Rec_2020 :: distinct Colour
