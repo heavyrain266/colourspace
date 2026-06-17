@@ -59,18 +59,18 @@ when ENABLE_HDR {
 	@(require_results)
 	rec_2020_encode :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Rec_2020 {
 		return Rec_2020{
-			_transfer_encode_rec709(rec.r),
-			_transfer_encode_rec709(rec.g),
-			_transfer_encode_rec709(rec.b),
+			_transfer_encode_rec_709(rec.r),
+			_transfer_encode_rec_709(rec.g),
+			_transfer_encode_rec_709(rec.b),
 		}
 	}
 
 	@(require_results)
 	rec_2020_decode :: #force_inline proc "contextless" (rec: Rec_2020) -> Linear_Rec_2020 {
 		return Linear_Rec_2020{
-			_transfer_decode_rec709(rec.r),
-			_transfer_decode_rec709(rec.g),
-			_transfer_decode_rec709(rec.b),
+			_transfer_decode_rec_709(rec.r),
+			_transfer_decode_rec_709(rec.g),
+			_transfer_decode_rec_709(rec.b),
 		}
 	}
 
@@ -79,12 +79,12 @@ when ENABLE_HDR {
 	// gamma threshold: 0.018, linearisation threshold: 0.081
 
 	@(require_results)
-	_transfer_encode_rec709 :: #force_inline proc "contextless" (x: f32) -> f32 {
+	_transfer_encode_rec_709 :: #force_inline proc "contextless" (x: f32) -> f32 {
 		return (1.099 * math.pow(x, 0.45) - 0.099) if (x >= 0.018) else (x * 4.5)
 	}
 
 	@(require_results)
-	_transfer_decode_rec709 :: #force_inline proc "contextless" (x: f32) -> f32 {
+	_transfer_decode_rec_709 :: #force_inline proc "contextless" (x: f32) -> f32 {
 		return math.pow((x + 0.099) / 1.099, 1.0 / 0.45) if (x >= 0.081) else (x / 4.5)
 	}
 

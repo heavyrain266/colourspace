@@ -60,21 +60,21 @@ when ENABLE_HDR {
 
 	@(require_results)
 	srgb_to_rec_2020 :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> Linear_Rec_2020 {
-		return (_LINEAR_SRGB_TO_LINEAR_REC2020 * Linear_Rec_2020{srgb.r, srgb.g, srgb.b})
+		return (_LINEAR_SRGB_TO_LINEAR_REC_2020 * Linear_Rec_2020{srgb.r, srgb.g, srgb.b})
 	}
 
 	@(require_results)
 	p3_to_rec_2020 :: #force_inline proc "contextless" (p3: Linear_P3) -> Linear_Rec_2020 {
-		return (_LINEAR_P3_TO_LINEAR_REC2020 * Linear_Rec_2020{p3.r, p3.g, p3.b})
+		return (_LINEAR_P3_TO_LINEAR_REC_2020 * Linear_Rec_2020{p3.r, p3.g, p3.b})
 	}
 
 	@(require_results)
 	rec_2020_to_srgb :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Linear_sRGB {
-		return (_LINEAR_REC2020_TO_LINEAR_SRGB * Linear_sRGB{rec.r, rec.g, rec.b})
+		return (_LINEAR_REC_2020_TO_LINEAR_SRGB * Linear_sRGB{rec.r, rec.g, rec.b})
 	}
 
 	@(require_results)
 	rec_2020_to_p3 :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Linear_P3 {
-		return (_LINEAR_REC2020_TO_LINEAR_P3 * Linear_Rec_2020{rec.r, rec.g, rec.b})
+		return (_LINEAR_REC_2020_TO_LINEAR_P3 * Linear_Rec_2020{rec.r, rec.g, rec.b})
 	}
 }

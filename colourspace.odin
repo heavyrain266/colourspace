@@ -64,7 +64,7 @@ when ENABLE_HDR {
 
 	@(require_results)
 	rec_2020 :: #force_inline proc "contextless" (r, g, b: f32) -> Rec_2020 {
-		return rec_2020_encode_rec709(Linear_Rec_2020{r, g, b})
+		return rec_2020_encode(Linear_Rec_2020{r, g, b})
 	}
 
 	@(require_results)
