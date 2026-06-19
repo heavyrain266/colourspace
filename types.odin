@@ -4,7 +4,7 @@ package colourspace
 Colour       :: [3]f32
 Chromaticity :: [2]f32
 
-OkLCh        :: distinct Colour
+OkLch        :: distinct Colour
 OkLab        :: distinct Colour
 
 CIE_XYZ      :: distinct Colour

@@ -7,7 +7,7 @@ ENABLE_HDR :: #config(COLOURSPACE_ENABLE_HDR, false)
 
 
 @(require_results)
-oklch_to_oklab :: #force_inline proc "contextless" (lch: OkLCh) -> OkLab {
+oklch_to_oklab :: #force_inline proc "contextless" (lch: OkLch) -> OkLab {
 	a: f32 = (lch.y * math.cos(lch.z))
 	b: f32 = (lch.y * math.sin(lch.z))
 
@@ -15,17 +15,17 @@ oklch_to_oklab :: #force_inline proc "contextless" (lch: OkLCh) -> OkLab {
 }
 
 @(require_results) // Hue in radians; use `math.to_degrees(h)` if needed
-oklab_to_oklch :: #force_inline proc "contextless" (lab: OkLab) -> OkLCh {
+oklab_to_oklch :: #force_inline proc "contextless" (lab: OkLab) -> OkLch {
 	c: f32 = math.hypot(lab.y, lab.z)
 	h: f32 = math.atan2(lab.z, lab.y) if c >= math.F32_EPSILON else 0.0
 
-	return OkLCh{lab.x, c, h}
+	return OkLch{lab.x, c, h}
 }
 
 
 @(require_results) // Hue in degrees, converted to radians internally
-oklch :: #force_inline proc "contextless" (l, c, h: f32) -> OkLCh {
-	return OkLCh{l, c, math.to_radians(h)}
+oklch :: #force_inline proc "contextless" (l, c, h: f32) -> OkLch {
+	return OkLch{l, c, math.to_radians(h)}
 }
 
 @(require_results)

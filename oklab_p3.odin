@@ -42,11 +42,11 @@ p3_to_oklab :: #force_inline proc "contextless" (p3: Linear_P3) -> OkLab {
 
 
 @(require_results)
-oklch_to_p3 :: #force_inline proc "contextless" (lch: OkLCh) -> Linear_P3 {
+oklch_to_p3 :: #force_inline proc "contextless" (lch: OkLch) -> Linear_P3 {
 	return oklab_to_p3(oklch_to_oklab(lch))
 }
 
 @(require_results)
-p3_to_oklch :: #force_inline proc "contextless" (p3: Linear_P3) -> OkLCh {
+p3_to_oklch :: #force_inline proc "contextless" (p3: Linear_P3) -> OkLch {
 	return oklab_to_oklch(p3_to_oklab(p3))
 }

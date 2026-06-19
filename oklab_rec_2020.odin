@@ -43,12 +43,12 @@ when ENABLE_HDR {
 
 
 	@(require_results)
-	oklch_to_rec_2020 :: #force_inline proc "contextless" (lch: OkLCh) -> Linear_Rec_2020 {
+	oklch_to_rec_2020 :: #force_inline proc "contextless" (lch: OkLch) -> Linear_Rec_2020 {
 		return oklab_to_rec_2020(oklch_to_oklab(lch))
 	}
 
 	@(require_results)
-	rec_2020_to_oklch :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OkLCh {
+	rec_2020_to_oklch :: #force_inline proc "contextless" (rec_2020: Linear_Rec_2020) -> OkLch {
 		return oklab_to_oklch(rec_2020_to_oklab(rec_2020))
 	}
 }

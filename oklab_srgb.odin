@@ -42,11 +42,11 @@ srgb_to_oklab :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OkLab {
 
 
 @(require_results)
-oklch_to_srgb :: #force_inline proc "contextless" (lch: OkLCh) -> Linear_sRGB {
+oklch_to_srgb :: #force_inline proc "contextless" (lch: OkLch) -> Linear_sRGB {
 	return oklab_to_srgb(oklch_to_oklab(lch))
 }
 
 @(require_results)
-srgb_to_oklch :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OkLCh {
+srgb_to_oklch :: #force_inline proc "contextless" (srgb: Linear_sRGB) -> OkLch {
 	return oklab_to_oklch(srgb_to_oklab(srgb))
 }
