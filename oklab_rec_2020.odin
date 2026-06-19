@@ -3,6 +3,8 @@ package colourspace
 import "core:math"
 
 
+_ :: math
+
 when ENABLE_HDR {
 	// Products of XYZ <-> Rec. 2020 and XYZ <-> LMS matrices.
 
