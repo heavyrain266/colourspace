@@ -9,9 +9,9 @@ OkLab        :: distinct Colour
 
 CIE_XYZ      :: distinct Colour
 
-_Linear_LMS  :: distinct Colour
 Linear_sRGB  :: distinct Colour
 Linear_P3    :: distinct Colour
+_Linear_LMS  :: distinct Colour
 
 sRGB         :: distinct Colour
 Display_P3   :: distinct Colour
