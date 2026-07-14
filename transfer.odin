@@ -58,35 +58,19 @@ when ENABLE_HDR {
 
 
 	@(require_results) rec_2020_encode_pq :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Rec_2100_PQ {
-		return Rec_2100_PQ{
-			_pq_encode(rec.r),
-			_pq_encode(rec.g),
-			_pq_encode(rec.b),
-		}
+		return Rec_2100_PQ{_pq_encode(rec.r), _pq_encode(rec.g), _pq_encode(rec.b)}
 	}
 
 	@(require_results) rec_2020_decode_pq :: #force_inline proc "contextless" (rec: Rec_2100_PQ) -> Linear_Rec_2020 {
-		return Linear_Rec_2020{
-			_pq_decode(rec.r),
-			_pq_decode(rec.g),
-			_pq_decode(rec.b),
-		}
+		return Linear_Rec_2020{_pq_decode(rec.r), _pq_decode(rec.g), _pq_decode(rec.b)}
 	}
 
 	@(require_results) rec_2020_encode_hlg :: #force_inline proc "contextless" (rec: Linear_Rec_2020) -> Rec_2100_HLG {
-		return Rec_2100_HLG{
-			_hlg_encode(rec.r),
-			_hlg_encode(rec.g),
-			_hlg_encode(rec.b),
-		}
+		return Rec_2100_HLG{_hlg_encode(rec.r), _hlg_encode(rec.g), _hlg_encode(rec.b)}
 	}
 
 	@(require_results) rec_2020_decode_hlg :: #force_inline proc "contextless" (rec: Rec_2100_HLG) -> Linear_Rec_2020 {
-		return Linear_Rec_2020{
-			_hlg_decode(rec.r),
-			_hlg_decode(rec.g),
-			_hlg_decode(rec.b),
-		}
+		return Linear_Rec_2020{_hlg_decode(rec.r), _hlg_decode(rec.g), _hlg_decode(rec.b)}
 	}
 
 
