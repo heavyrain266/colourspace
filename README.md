@@ -2,18 +2,22 @@
 
 *A pragmatic set of modern colour space transforms*
 
-
 ## Overview
 
-`colourspace` provides correct, minimal colour space transforms optimised for UI frameworks and creative tooling, covering *OkLCh*, *OkLab*, *sRGB*, *Display P3*, *Rec. 2020*, and *Rec. 2100*. Transforms are direct matrix multiplications with pre-computed matrices derived with `tools/builder.odin`. Perceptual manipulation and colour appearance work uses OkLab as the working space.
+The `colourspace` package provides correct, perceptual colour space transforms optimised for UI frameworks and creative tooling. Out-of-gamut values are passed through as-is, with gamut mappings left to the caller — typically shader-side in a display pipeline.
 
-Gamut mapping is explicitly **out of scope**. Out-of-gamut values are passed through as-is, and handling is left to the caller — typically shader-side in a display pipeline.
+### Colour Spaces
 
+Each one of the spaces covered below comes with related non-linear transfer curves and procedures (`encode_*`/`decode_*`).
 
-### High Dynamic Range (HDR) Support
+- **Perceptual**:
+	- *OkLab*, *OkLCh*,
+- **Standard Dynamic Range**:
+	- *sRGB*, *Display P3*, *Adobe RGB (1998)*,
+- **High Dynamic Range**:
+	- *Rec. 2020*, *Rec. 2100* (via PQ and HLG)
 
-*Rec. 2020* and *Rec. 2100* spaces along with *Rec. 709*, *Perceptual Quantizer* and *Hybrid Log-Gamma* transfer functions can be enabled with: `-define:COLOURSPACE_ENABLE_HDR`
-
+Furthermore, any "missing" tristimulus spaces are trivial to add using [`tools/builder.odin`](tools/builder.odin) script, which generates the bidirectional transform matrices.
 
 ## References
 
@@ -21,13 +25,17 @@ Gamut mapping is explicitly **out of scope**. Out-of-gamut values are passed thr
 
 - [A perceptual color space for image processing](https://bottosson.github.io/posts/oklab/)
 
-
 ### International Color Consortium (ICC)
 
-- [sRGB transfer function (IEC 61966-2-1)](https://www.color.org/chardata/rgb/srgb.xalter)
+- [sRGB transfer function (IEC 61966-2-1)](https://registry.color.org/rgb-registry/srgb)
+
+- [Adobe RGB (1998) Color Encoding](https://registry.color.org/rgb-registry/adobergb)
+
 - [Display P3 Color Encoding](https://registry.color.org/rgb-registry/displayp3)
 
 
-### ITU-R (Rec. 2020)
+### ITU-R
+
+- [Recommendation ITU-R BT.709-6 - Parameter values for the HDTV standards](https://www.itu.int/rec/R-REC-BT.709)
 
 - [Recommendation ITU-R BT.2020-2 - Parameter values for ultra-high definition television systems](https://www.itu.int/rec/R-REC-BT.2020)

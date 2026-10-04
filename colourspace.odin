@@ -3,29 +3,100 @@ package colourspace
 import "core:math"
 
 
-ENABLE_HDR :: #config(COLOURSPACE_ENABLE_HDR, false)
+oklab_to_oklch :: proc "contextless" (lab: Colour) -> Colour #no_bounds_check {
+	c: f32 = math.hypot(lab.g, lab.b)
+	h: f32 = math.atan2(lab.b, lab.g) if (c >= math.F32_EPSILON) else 0.0
 
-
-// Polar to cartesian coordinate de-composition.
-@(require_results) oklch_to_oklab :: #force_inline proc "contextless" (lch: OkLch) -> OkLab {
-	// a = chroma * cos(hue)
-	a: f32 = (lch.y * math.cos(lch.z))
-
-	// b = chroma * sin(hue)
-	b: f32 = (lch.y * math.sin(lch.z))
-
-	return OkLab{lch.x, a, b}
+	return Colour{lab.r, c, h}
 }
 
-// Cartesian to polar coordinate re-composition.
-@(require_results) oklab_to_oklch :: #force_inline proc "contextless" (lab: OkLab) -> OkLch {
-	// hypot(a, b) gives chroma as the vector length sqrt(a*a + b*b),
-	// avoiding overflow/underflow issues from squaring directly.
-	c: f32 = math.hypot(lab.y, lab.z)
+oklab_from_oklch :: proc "contextless" (lch: Colour) -> Colour #no_bounds_check {
+	a: f32 = (lch.g * math.cos(lch.b))
+	b: f32 = (lch.g * math.sin(lch.b))
 
-	// atan2(b, a) gives the hue angle, using both signs to get the correct quadrant.
-	// Near the origin (near-zero chroma) hue is undefined, so default to 0.
-	h: f32 = math.atan2(lab.z, lab.y) if (c >= math.F32_EPSILON) else 0.0
+	return Colour{lch.r, a, b}
+}
 
-	return OkLch{lab.x, c, h}
+
+srgb_to_oklab :: proc "contextless" (srgb: Colour) -> Colour #no_bounds_check {
+	lms: Colour = (LINEAR_SRGB_TO_LINEAR_LMS * srgb)
+
+	return (LINEAR_LMS_TO_OKLAB * Colour{
+		math.cbrt(lms.r),
+		math.cbrt(lms.g),
+		math.cbrt(lms.b),
+	})
+}
+
+srgb_from_oklab :: proc "contextless" (lab: Colour) -> Colour #no_bounds_check {
+	lms: Colour = (OKLAB_TO_LINEAR_LMS * lab)
+
+	return (LINEAR_LMS_TO_LINEAR_SRGB * Colour{
+		(lms.r * lms.r * lms.r),
+		(lms.g * lms.g * lms.g),
+		(lms.b * lms.b * lms.b),
+	})
+}
+
+
+p3_to_oklab :: proc "contextless" (p3: Colour) -> Colour #no_bounds_check {
+	lms: Colour = (LINEAR_DISPLAY_P3_TO_LINEAR_LMS * p3)
+
+	return (LINEAR_LMS_TO_OKLAB * Colour{
+		math.cbrt(lms.x),
+		math.cbrt(lms.y),
+		math.cbrt(lms.z),
+	})
+}
+
+p3_from_oklab :: proc "contextless" (lab: Colour) -> Colour #no_bounds_check {
+	lms: Colour = (OKLAB_TO_LINEAR_LMS * lab)
+
+	return (LINEAR_LMS_TO_LINEAR_DISPLAY_P3 * Colour{
+		(lms.r * lms.r * lms.r),
+		(lms.g * lms.g * lms.g),
+		(lms.b * lms.b * lms.b),
+	})
+}
+
+
+adobe_to_oklab :: proc "contextless" (rgb: Colour) -> Colour #no_bounds_check {
+	lms: Colour = (LINEAR_ADOBE_RGB_TO_LINEAR_LMS * rgb)
+
+	return (LINEAR_LMS_TO_OKLAB * Colour{
+		math.cbrt(lms.r),
+		math.cbrt(lms.g),
+		math.cbrt(lms.b),
+	})
+}
+
+adobe_from_oklab :: proc "contextless" (lab: Colour) -> Colour #no_bounds_check {
+	lms: Colour = (OKLAB_TO_LINEAR_LMS * lab)
+
+	return (LINEAR_LMS_TO_LINEAR_ADOBE_RGB * Colour{
+		(lms.r * lms.r * lms.r),
+		(lms.g * lms.g * lms.g),
+		(lms.b * lms.b * lms.b),
+	})
+}
+
+
+rec2020_to_oklab :: proc "contextless" (rec2020: Colour) -> Colour #no_bounds_check {
+	lms: Colour = (LINEAR_REC2020_TO_LINEAR_LMS * rec2020)
+
+	return (LINEAR_LMS_TO_OKLAB * Colour{
+		math.cbrt(lms.x),
+		math.cbrt(lms.y),
+		math.cbrt(lms.z),
+	})
+}
+
+rec2020_from_oklab :: proc "contextless" (lab: Colour) -> Colour #no_bounds_check {
+	lms: Colour = (OKLAB_TO_LINEAR_LMS * lab)
+
+	return (LINEAR_LMS_TO_LINEAR_REC2020 * Colour{
+		(lms.r * lms.r * lms.r),
+		(lms.g * lms.g * lms.g),
+		(lms.b * lms.b * lms.b),
+	})
 }
