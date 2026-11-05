@@ -1,4 +1,4 @@
-package colourspacespace
+package colourspace
 
 import "core:math"
 

@@ -1,4 +1,4 @@
-package colours
+package colourspace
 
 
 Colour :: [3]f32
